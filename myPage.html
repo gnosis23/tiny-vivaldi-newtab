@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>新的标签页</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="styles/index.css" rel="stylesheet">
+</head>
+
+<body ng-app="app">
+  <nav>
+    <ul>
+      <li class="active">Speed Dial</li>
+      <li><a>书签</a></li>
+      <li><a>历史</a></li>
+    </ul>
+  </nav>
+
+
+  <div class="main-container clearfix" ng-controller="TabCtrl">
+
+    <div class="tab-item " ng-repeat="item in bookmarks track by item.id">
+      <a ng-click="goto(item.url)">
+        <div class="thumb">
+          <img ng-src="{{item.image}}" ng-if="item.image"></img>
+        </div>
+      </a>
+      <p class="title">{{item.title || item.url}}</p>
+    </div>
+  </div>
+
+  <script src="vendor/angular.min.js"></script>
+  <script src="scripts/index.js"></script>
+</body>
+
+</html>
