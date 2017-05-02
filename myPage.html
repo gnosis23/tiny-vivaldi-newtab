@@ -18,10 +18,10 @@
   </nav>
 
 
-  <div class="main-container clearfix" ng-controller="TabCtrl">
+  <div class="main-container clearfix" ng-controller="TabCtrl as tc">
 
-    <div class="tab-item " ng-repeat="item in bookmarks track by item.id">
-      <a ng-click="goto(item.url)">
+    <div class="tab-item " ng-repeat="item in tc.bookmarks track by item.id">
+      <a ng-click="tc.goto(item.url)">
         <div class="thumb">
           <img ng-src="{{item.image}}" ng-if="item.image"></img>
         </div>

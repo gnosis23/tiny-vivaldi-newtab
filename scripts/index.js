@@ -6,6 +6,7 @@
 (function () {
   'use strict';
 
+  // promise chrome api
   function chromeBookmarksGetChildrenAsync(id) {
     return new Promise(function (resolve, reject) {
       chrome.bookmarks.getChildren("1", function (nodes) {
@@ -14,40 +15,58 @@
     })
   }
 
+  function storageGetAsync(baseUrl) {
+    return new Promise((resolve, reject) =>
+      chrome.storage.local.get(baseUrl, function (result) {
+        resolve(result);
+      })
+    )
+  }
+
   function baseurl(url) {
     const groups = url.split('/');
     return groups[2];
   }
 
+  // 
   var module = angular.module('app', []);
 
-  module.controller('TabCtrl', [
-    '$scope',
-    function ($scope) {
-      $scope.bookmarks = [];
+  module.controller('TabCtrl', TabCtrl);
+
+  TabCtrl.$inject = ['$scope']
+
+  function TabCtrl($scope) {
+    var vm = this;
+    vm.bookmarks = [];
+    vm.goto = _goto;
+
+    // Init
+    setup();
+
+    /////  Functions
+    function setup() {
       let _imageBuf = {};
 
-      $scope.goto = function (url) {
-        chrome.tabs.create({ url: url })
-      }
-
-      // Init
       chromeBookmarksGetChildrenAsync("1").then(function (data) {
+        vm.bookmarks = data;
+        return storageGetAsync(null)
+      }).then(function (result) {
         $scope.$apply(function () {
-          $scope.bookmarks = data;          
-        })
-      });
-
-      chrome.storage.local.get(null, function(result) {
-        $scope.$apply(function() {
           _imageBuf = result;
-          $scope.bookmarks = $scope.bookmarks.map(x => {
+          vm.bookmarks = vm.bookmarks.map(x => {
             x.image = _imageBuf[baseurl(x.url)] || "";
             return x;
           })
         })
-      })
+      }).catch(function(err){
+        console.log(err);
+      });
+
     }
-  ]);
+
+    function _goto(url) {
+      chrome.tabs.create({ url: url })
+    }
+  }
 
 })();
