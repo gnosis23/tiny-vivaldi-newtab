@@ -39,6 +39,8 @@
     var vm = this;
     vm.bookmarks = [];
     vm.goto = _goto;
+    vm.removeImage = _remove;
+    vm.add = _add;
 
     // Init
     setup();
@@ -56,7 +58,7 @@
           vm.bookmarks = vm.bookmarks.map(x => {
             x.image = _imageBuf[baseurl(x.url)] || "";
             return x;
-          })
+          });
         })
       }).catch(function(err){
         console.log(err);
@@ -64,8 +66,20 @@
 
     }
 
+    function _remove($event, item) {
+      $event.stopPropagation();
+      item.image = "";
+      let obj = {};
+      obj[baseurl(item.url)] = null;
+      chrome.storage.local.set(obj);
+    }
+
     function _goto(url) {
       chrome.tabs.create({ url: url })
+    }
+
+    function _add() {
+      
     }
   }
 

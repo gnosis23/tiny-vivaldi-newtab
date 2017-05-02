@@ -24,9 +24,18 @@
       <a ng-click="tc.goto(item.url)">
         <div class="thumb">
           <img ng-src="{{item.image}}" ng-if="item.image"></img>
+          <div class="refresh" ng-click="tc.removeImage($event, item)">X</div>          
         </div>
       </a>
       <p class="title">{{item.title || item.url}}</p>
+    </div>
+
+    <div class="tab-item">
+      <a ng-click="tc.add()">
+        <div class="thumb">
+          <div class="add">+</div>
+        </div>
+      </a>
     </div>
   </div>
 
