@@ -17,30 +17,33 @@
     </ul>
   </nav>
 
+  <div ng-controller="TabCtrl as tc">
+    <div class="main-container clearfix">
 
-  <div class="main-container clearfix" ng-controller="TabCtrl as tc">
+      <div class="tab-item " ng-repeat="item in tc.bookmarks track by item.id">
+        <a ng-click="tc.goto(item.url)">
+          <div class="thumb">
+            <img ng-src="{{item.image}}" ng-if="item.image"></img>
+            <div class="refresh" ng-click="tc.removeImage($event, item)">X</div>          
+          </div>
+        </a>
+        <p class="title">{{item.title || item.url}}</p>
+      </div>
 
-    <div class="tab-item " ng-repeat="item in tc.bookmarks track by item.id">
-      <a ng-click="tc.goto(item.url)">
-        <div class="thumb">
-          <img ng-src="{{item.image}}" ng-if="item.image"></img>
-          <div class="refresh" ng-click="tc.removeImage($event, item)">X</div>          
-        </div>
-      </a>
-      <p class="title">{{item.title || item.url}}</p>
+      <div class="tab-item">
+        <a ng-click="tc.add()">
+          <div class="thumb">
+            <div class="add">+</div>
+          </div>
+        </a>
+      </div>
     </div>
-
-    <div class="tab-item">
-      <a ng-click="tc.add()">
-        <div class="thumb">
-          <div class="add">+</div>
-        </div>
-      </a>
-    </div>
+    <div bookmark-add-panel is-open="tc.panelOpen" add-bookmark="tc.addBookmark(url)"></div>
   </div>
 
   <script src="vendor/angular.min.js"></script>
   <script src="scripts/index.js"></script>
+  <script src="scripts/template/bookmarkAddPanel.js"></script>  
 </body>
 
 </html>

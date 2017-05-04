@@ -12,6 +12,10 @@ a {text-decoration: none; color: #333;}
     visibility: hidden;
 }
 
+.btn {
+  padding: 5px 10px;
+}
+
 body {
   background: url(../images/bg1.jpg);
   color: white;
@@ -22,7 +26,8 @@ nav {
   width: 100%;
   height: 50px;
   background-color: #fff;
-  box-shadow: 0px 5px 2px #8c8294;
+  box-shadow: 0px 2px 5px #8c8294;
+  z-index: 10;
 }
 
 nav>ul {
@@ -45,7 +50,7 @@ nav>ul>li.active {
 }
 
 .main-container {
-  padding: 130px 0 0 80px;
+  padding: 130px 0 150px 80px;
   margin: 0 auto;
 }
 
@@ -119,4 +124,43 @@ nav>ul>li.active {
   line-height: 128px;
   font-size: 65px;
   color: #0098df;
+}
+
+.bookmark-add-panel {
+  position: fixed;
+  bottom: 0;
+  height: 150px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px -2px 5px #8c8294;
+  transition: all 1s;
+  transform: translate(0, 0);
+}
+
+.bookmark-add-panel.hide {
+  /*display: none;*/
+  transform: translate(0, 150px);
+}
+
+.bookmark-add-panel .left {
+  float: left;
+  width: 30%;
+  border-right: 3px solid #e3e4e5;
+  height: 100%;
+  padding: 10px;
+}
+
+.bookmark-add-panel .left h5 {
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.bookmark-add-panel .left input {
+  padding: 5px;
+  vertical-align: middle;
+}
+
+.bookmark-add-panel .left .btn {
+  vertical-align: middle;
 }

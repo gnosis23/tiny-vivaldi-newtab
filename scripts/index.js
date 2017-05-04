@@ -38,9 +38,11 @@
   function TabCtrl($scope) {
     var vm = this;
     vm.bookmarks = [];
+    vm.panelOpen = false;
     vm.goto = _goto;
     vm.removeImage = _remove;
     vm.add = _add;
+    vm.addBookmark = _addBookmark;
 
     // Init
     setup();
@@ -60,7 +62,7 @@
             return x;
           });
         })
-      }).catch(function(err){
+      }).catch(function (err) {
         console.log(err);
       });
 
@@ -79,7 +81,19 @@
     }
 
     function _add() {
-      
+      vm.panelOpen = !vm.panelOpen;
+    }
+
+    function _addBookmark(url) {
+      chrome.bookmarks.create({ 'parentId': "1", 'title': "", 'url': url }, function (result) {
+        if (chrome.runtime.lastError) {
+          // Something went wrong
+          console.warn("Whoops.. " + chrome.runtime.lastError.message);
+          // Maybe explain that to the user too?
+        } else {
+          setup();
+        }
+      });
     }
   }
 
