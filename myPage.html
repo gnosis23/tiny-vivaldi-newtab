@@ -27,7 +27,10 @@
             <div class="refresh" ng-click="tc.removeImage($event, item)">X</div>          
           </div>
         </a>
-        <p class="title">{{item.title || item.url}}</p>
+        
+        <input class="title" type="text" ng-model="item.text" 
+              ng-change="tc.changeName(item)"
+              ng-model-options="{debounce: 1000}" />
       </div>
 
       <div class="tab-item">

@@ -43,6 +43,7 @@
     vm.removeImage = _remove;
     vm.add = _add;
     vm.addBookmark = _addBookmark;
+    vm.changeName = _changeName;
 
     // Init
     setup();
@@ -59,6 +60,7 @@
           _imageBuf = result;
           vm.bookmarks = vm.bookmarks.map(x => {
             x.image = _imageBuf[baseurl(x.url)] || "";
+            x.text = x.title || x.url;;
             return x;
           });
         })
@@ -88,12 +90,22 @@
       chrome.bookmarks.create({ 'parentId': "1", 'title': "", 'url': url }, function (result) {
         if (chrome.runtime.lastError) {
           // Something went wrong
-          console.warn("Whoops.. " + chrome.runtime.lastError.message);
-          // Maybe explain that to the user too?
+          console.warn("Whoops.. " + chrome.runtime.lastError.message);         
         } else {
           setup();
         }
       });
+    }
+
+    function _changeName(item) {
+      chrome.bookmarks.update(item.id, {"title": item.text}, function(result) {
+        if (chrome.runtime.lastError) {
+          // Something went wrong
+          console.warn("Whoops.. " + chrome.runtime.lastError.message);        
+        } else {
+          setup();
+        }
+      })
     }
   }
 
