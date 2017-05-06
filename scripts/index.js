@@ -39,11 +39,15 @@
     var vm = this;
     vm.bookmarks = [];
     vm.panelOpen = false;
+    vm.showMenu = false;
+    vm.clickPosition = {x:0, y: 0};
     vm.goto = _goto;
     vm.removeImage = _remove;
     vm.add = _add;
     vm.addBookmark = _addBookmark;
     vm.changeName = _changeName;
+    vm.openContextMenu = _openContextMenu;
+    vm.hideMenu = _hideMenu;
 
     // Init
     setup();
@@ -106,6 +110,15 @@
           setup();
         }
       })
+    }
+
+    function _openContextMenu($event, item) {
+      vm.showMenu = true;
+      vm.clickPosition = {x: $event.clientX, y: $event.clientY};
+    }
+
+    function _hideMenu() {
+      vm.showMenu = false;
     }
   }
 

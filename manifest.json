@@ -13,7 +13,7 @@
     "scripts": ["background.js"]
   },
   "chrome_url_overrides" : {
-    "newtab": "myPage.html"
+    "newtab": "index.html"
   },
   "manifest_version": 2
 }
