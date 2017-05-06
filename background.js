@@ -14,8 +14,12 @@ function tabsGetAsync(tabId) {
 
 function storageGetAsync(baseUrl) {
   return new Promise((resolve, reject) => 
-    chrome.storage.local.get(baseUrl, function (result) {
-      resolve(result);
+    chrome.storage.local.get(baseUrl, function (result) {      
+      if (chrome.runtime.lastError) {        
+        reject(chrome.runtime.lastError.message);
+      } else {
+        resolve(result);
+      }
     })
   )
 }
