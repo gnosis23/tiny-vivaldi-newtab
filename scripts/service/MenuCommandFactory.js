@@ -9,6 +9,7 @@
     return {
       open: open,
       openInNewTabActive: openInNewTabActive,
+      openInNewTabBackground: openInNewTabBackground,
     }
 
     function open(bookmark) {
@@ -23,6 +24,10 @@
 
     function openInNewTabActive(bookmark) {
       chrome.tabs.create({ url: bookmark.url, active: true })
+    }
+
+    function openInNewTabBackground(bookmark) {
+      chrome.tabs.create({ url: bookmark.url, active: false })
     }
   }
 
