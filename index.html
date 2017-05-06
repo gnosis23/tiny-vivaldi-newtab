@@ -18,7 +18,7 @@
   </nav>
 
   <div ng-controller="TabCtrl as tc">
-    <div class="main-container clearfix">
+    <div class="main-container">
 
       <div class="tab-item " ng-repeat="item in tc.bookmarks track by item.id">
         <a ng-click="tc.goto(item)" ng-right-click="tc.openContextMenu($event,item)" source="item">
@@ -40,6 +40,14 @@
           </div>
         </a>
       </div>
+
+      <div class="tab-item tab-item-hidden"></div>
+      <div class="tab-item tab-item-hidden"></div>
+      <div class="tab-item tab-item-hidden"></div>
+      <div class="tab-item tab-item-hidden"></div>
+      <div class="tab-item tab-item-hidden"></div>
+      <div class="tab-item tab-item-hidden"></div>
+
     </div>
     <div bookmark-add-panel is-open="tc.panelOpen" add-bookmark="tc.addBookmark(url)"></div>
     <div  context-menu show-menu="tc.showMenu"
