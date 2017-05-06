@@ -5,14 +5,17 @@
 
   app.directive('contextMenu', contextMenu);
 
-  function contextMenu() {
+  contextMenu.$inject = ['MenuCommandFactory']
+
+  function contextMenu(MenuCommandFactory) {
     var directive = {
       restrict: 'EA',
       replace: true,
       scope: {
-        position: '=',
+        position: '=',        
         showMenu: '=',
-        clickOutHandler: '&'
+        clickOutHandler: '&',
+        commandHandler: '&',
       },
       templateUrl: 'views/template/contextMenu.html',
       link: link
@@ -22,21 +25,31 @@
 
     function link(scope, elems, attrs) {
       scope.hideMenu = _hideMenu;
+      scope.command = _command;
 
+      setup();
+
+      // implementations
       function _hideMenu() {
         scope.clickOutHandler();
       }
 
-      scope.$watch('position', (newValue) => {
-        if (newValue) {
-          elems[0].style.left = `${newValue.x}px`;
-          elems[0].style.top = `${newValue.y}px`;
-        }
-      })
+      function setup() {
+        scope.$watch('position', (newValue) => {
+          if (newValue) {
+            elems[0].style.left = `${newValue.x}px`;
+            elems[0].style.top = `${newValue.y}px`;
+          }
+        })
 
-      elems[0].addEventListener('contextmenu', function (e) {
-        e.preventDefault();
-      })
+        elems[0].addEventListener('contextmenu', function (e) {
+          e.preventDefault();
+        })
+      }
+
+      function _command(name) {
+        scope.commandHandler({command: MenuCommandFactory[name]})
+      }
     }
   }
 })();

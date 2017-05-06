@@ -33,14 +33,15 @@
 
   module.controller('TabCtrl', TabCtrl);
 
-  TabCtrl.$inject = ['$scope']
+  TabCtrl.$inject = ['$scope', 'MenuCommandFactory']
 
-  function TabCtrl($scope) {
+  function TabCtrl($scope, MenuCommandFactory) {
     var vm = this;
     vm.bookmarks = [];
     vm.panelOpen = false;
     vm.showMenu = false;
     vm.clickPosition = {x:0, y: 0};
+    vm.selectedBookmark = null;
     vm.goto = _goto;
     vm.removeImage = _remove;
     vm.add = _add;
@@ -48,6 +49,7 @@
     vm.changeName = _changeName;
     vm.openContextMenu = _openContextMenu;
     vm.hideMenu = _hideMenu;
+    vm.runCommand = _runCommand;
 
     // Init
     setup();
@@ -82,8 +84,8 @@
       chrome.storage.local.set(obj);
     }
 
-    function _goto(url) {
-      chrome.tabs.create({ url: url })
+    function _goto(bookmark) {      
+      MenuCommandFactory['open'](bookmark);
     }
 
     function _add() {
@@ -113,12 +115,19 @@
     }
 
     function _openContextMenu($event, item) {
+      vm.selectedBookmark = item;
       vm.showMenu = true;
       vm.clickPosition = {x: $event.clientX, y: $event.clientY};
     }
 
     function _hideMenu() {
-      vm.showMenu = false;
+      vm.selectedBookmark = null;
+      vm.showMenu = false;      
+    }
+
+    function _runCommand(command) {
+      command(vm.selectedBookmark);
+      _hideMenu();
     }
   }
 
