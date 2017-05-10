@@ -85,7 +85,12 @@
     }
 
     function _goto(bookmark) {      
-      MenuCommandFactory['open'](bookmark);
+      chrome.storage.local.get({
+        options: { newTab: 'open' }
+      }, function (items) {
+        const openActionType = items.options.newTab;
+        MenuCommandFactory[openActionType](bookmark);
+      });      
     }
 
     function _add() {

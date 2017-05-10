@@ -9,6 +9,7 @@
       "default_title": "My Bookmarks",
       "default_icon": "icon.png"
   },
+  "options_page": "options.html",
   "background": {
     "scripts": ["background.js"]
   },
