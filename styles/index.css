@@ -53,10 +53,10 @@ nav>ul>li.active {
   padding: 100px 0;
   width: 80%;
   margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid; /* 1 */
+  grid-template-columns: repeat(auto-fill, 220px); /* 2 */
+  grid-gap: 1rem; /* 3 */
+  justify-content: space-between; /* 4 */
 }
 
 .tab-item {
